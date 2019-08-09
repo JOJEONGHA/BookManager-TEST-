@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="refresh" content="3">
+	<title>book list</title>
+	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$.getJSON('http://localhost:8080/list',function(data){
+				$.each(data,function(i, item)){
+					$("textara[id = booknum]").text(item.Booknum);
+					$("textara[id = list_title]").text(item.Title);
+					$("textara[id = publisher]").text(item.Publisher);
+					$("textara[id = author]").text(item.Author);
+					$("textara[id = summary]").text(item.Summary);
+				}
+			})
+		});
+		
+	</script>
+
+</head>
+<body>
+	<input type="" name="">
+    <table border="1" class = "books">
+    	<thead>
+    		<th>번 호</th>
+			<th>제 목</th>
+			<th>출판사</th>
+			<th>작 가</th>
+			<th>상세설명</th>
+    	</thead>
+		<tbody id = tbody>
+			<td id = "booknum">booknum</td>
+	    	<td>
+	    		<a href="info.html" id = "list_title">title</a>
+	    	</td>
+	    	<td id = "publisher">publisher</td>
+	    	<td id = "author">author</td>
+	    	<td id = "summary">summary</td>
+		</tbody>
+    </table>
+    <br/>
+    <input type="button" name="list_create" 
+				value="도서 추가" onclick="location.href = 'Create.html'">
+</body>
+</html>
+

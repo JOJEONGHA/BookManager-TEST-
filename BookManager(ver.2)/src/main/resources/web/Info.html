@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Book Information </title>
+	<meta charset="utf-8">
+	<meta http-equiv="refresh" content="2">
+	<style type="text/css">
+		h1 { 
+			color: red;
+ 		 	display: block;
+ 		 	font-size: 2em;
+ 			margin-top: 0.67em;
+ 			margin-bottom: 0.67em;
+ 			margin-left: 0;
+ 			margin-right: 0;
+ 			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<h1 id = "info_title" value = "default value">default value</h1>
+	<p>도서번호 : 
+		<input type="text" name="info_booknum" value="default">
+	</p>
+	<p>저   자 :
+		<input type="text" name="info_author" value="default">
+	</p>
+	<p>출 판 사 :
+		<input type="text" name="info_publisher" value="default">
+	</p>
+	<p>상세설명 :
+		<input type="text" name="info_summary" value="default">
+	</p>
+	<input type="button" name="info_update" value="수정" 
+			onclick="location.href = 'List.html'">
+	<input type="button" name="info_delete" value="삭제" 
+			onclick="location.href = 'List.html'">
+</body>
+</html>

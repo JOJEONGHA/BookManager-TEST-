@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Books Manager System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+	th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+<link href="../../static/css/spring-core.css"
+	th:href="@{css/spring-core.css}" rel="stylesheet" media="screen" />
+</head>
+<body>
+	<div class="container">
+		<h2>Books List</h2>
+		<table class="table table-striped">
+			<tr>
+				<th>Book Number</th>
+				<th>Title</th>
+				<th>Publisher</th>
+				<th>Summary</th>
+				<!-- <th>Contents</th> -->
+			</tr>
+			<tr th:each="book : ${books}">
+				<td th:text="${book.booknum}"></td>
+				<td th:text="${book.title}"></td>
+				<td th:text="${book.publisher}"></td>
+				<td th:text="${book.summary}"></td>
+				<!-- <td><a th:href="${'/book/show/' + product.id}">View</a></td> -->
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
