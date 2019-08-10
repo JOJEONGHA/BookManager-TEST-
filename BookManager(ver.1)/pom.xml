@@ -14,7 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>BookManager</name>
 	<description>Bookmanagement system on Web</description>
-
+<!-- Test fix -->
 	<properties>
 		<java.version>12</java.version>
 	</properties>
