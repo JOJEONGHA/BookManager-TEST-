@@ -9,6 +9,8 @@ public class JoinTable{
     private String authorname;
     private Integer birthyear;
     
+    public JoinTable() {}
+    
 	public Integer getBirthyear() {
 		return birthyear;
 	}

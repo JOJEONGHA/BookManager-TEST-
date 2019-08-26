@@ -28,7 +28,21 @@ public class BooksDAO {
 			e.printStackTrace();
 		}
     }
-    
+    public JoinTable bookInfo(int num) {
+    	JoinTable info = new JoinTable();
+    	
+    	List<JoinTable> list = new ArrayList<JoinTable>();
+    	list = listBooks();
+    	// 글쓴이 수정하는 거는 복수개가 들어가므로 신경써야한다.
+    	for(JoinTable i : list) {
+    		if(i.getBooknum() == num) {
+    			info = i;
+    			break;
+    		}
+    	}
+    	return info;
+    }
+	
     public List<JoinTable> listBooks(){
         List<JoinTable> list = new ArrayList<JoinTable>();
         try {

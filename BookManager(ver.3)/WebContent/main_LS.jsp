@@ -37,12 +37,20 @@
 				<td>${books.title}</td>
 				<td>${books.authorname}</td>
 				<td>${books.publisher}</td>
+				<td>
+					<form action="/bookmanager/controller/update.do">
+						<input type= "hidden" value="${books.booknum}"  name="bookinfo">
+						<input type="hidden" value="view" name="btnInfo">
+						<input type="submit" value="View!">
+					</form>
+				</td>
 			</tr>
 		</c:forEach>
 
 	</table>
-	<form action = "/controller/Create_Book.do" method = "post">	<!-- ${contextPath} -->
-		<input type = "button" name = "btn_create" value = "+">
+	<form action = "/bookmanager/controller/Create_Book.do" method = "post">
+		<input type = "hidden" name = "btn_create" value = "first_visit">
+		<input type = "submit" value = "+">
 	</form>
 </body>
 </html>

@@ -34,7 +34,14 @@ public class MainController extends HttpServlet {
 
 		//(Main - create new book)
 		if(action.equals("/Create_Book.do")){
-
+			String visit = request.getParameter("btn_create");
+			// First visit and Direct visit(URL)
+			if(visit.equals("first_visit") || visit.equals(null)) {
+				nextPage = "/create_C.jsp";
+			}else {
+				nextPage = "/main_LS.jsp";
+			}
+			
 		}
 		//(main - Load all book list)
 		else if (action.equals("/List.do")) {
@@ -43,16 +50,23 @@ public class MainController extends HttpServlet {
 			nextPage = "/main_LS.jsp";
 		}
 		//(info - book information update & delete)
-		else if(action.equals("/Update.do")){
-
+		else if(action.equals("/update.do")){
+			// View Button Click Action
+			if(request.getParameter("btnInfo").equals("view")) {
+				String temp_snum = request.getParameter("bookinfo");
+				int temp_num = Integer.parseInt(temp_snum);
+				JoinTable temp = dao.bookInfo(temp_num);
+				request.setAttribute("bookInfo", temp);
+				nextPage = "/info_UD.jsp";
+			}
 		}
 		//(enroll - Author enroll)
 		else if(action.equals("/Enroll.do")){
-
+			
 		}
 		//(all page - back to main(list))
 		else if(action.equals("/Back.do") || action == ""){
-
+			nextPage = "/main_LS.jsp";
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);
