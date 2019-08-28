@@ -1,25 +1,96 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+	pageEncoding="UTF-8" isELIgnored="false"
+	import = "bookDAO.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("utf-8");
+%>
+<%
+	BooksDAO dao = new BooksDAO();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Book create</title>
+<script type="text/javascript">
+	// author db check & add row
+	function checkbtn() {
+		// db connection
+		// Button & text box add
+		var oTbl = document.getElementById("author");
+		var btn = document.getElementById("checkBtn");
+		btn.parentNode.removeChild(btn);
+		var oRow = oTbl.insertRow();
+		oRow.onmouseover = function() {
+			oTbl.clickedRowIndex = this.rowIndex
+		}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+		var oCell = oRow.insertCell();
+
+		//삽입될 Form Tag
+		var frmTag = "<input type=text name=authorbox style=width:150px; height:20px;> ";
+		frmTag += "<input type=button id = 'checkBtn'  value='check' onClick='checkbtn()' style='cursor:hand'>";
+		oCell.innerHTML = frmTag;
+	}
+</script>
 </head>
 <body>
-	<form action = "/bookmanager/controller/Create.do" method = "post">
-		제       목 : <input type = "text" name = "Bname_info" value = "db 책 제목"><br><br>
-		저       자 : <input type = "text" name = "Bauth_info" value = "db 저자"><br><br>
-		출  판  사 : <input type = "text" name = "Bpub_info" value = "db 출판사"><br><br>
-		상세 설명 : <input type = "text" name = "Binf_info" value = "db 상세설명"><br><br>
-		<input type = "submit" name = "Bcreate" value = "도서 추가"><br><br>
+<form action="/bookmanager/controller/Create_Book.do" method="post">
+	<table>
+		<tr>
+			<td>도서번호 : ${booknum} <input type="hidden" name="booknum"
+				value="${booknum}"></td>
+		</tr>
+		<tr>
+			<!-- Author -->
+			<td>
+				<table id="author">
+					<tr>
+						<td>저 자 :<input type="text" name="authorbox"
+							style="width: 150px; height: 20px;"></td>
+						<td><input type="button" id="checkBtn" onclick="checkbtn()"
+							value="check"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>출 판 사 : <input type="text" name="Bpub_info"></td>
+		</tr>
+		<tr>
+			<td>상세 설명 : <input type="text" name="Binf_info"></td>
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td><input type="button" onclick="" value="도서 추가"></td>
+			<td><input type="button" onclick="" value="작가 추가"><
+		<tr>
+			<td><input type="button" name="btn_Back" value="back"></td>
+		</tr>
+	</table>
+</form>
+
+	<%-- <form action="/bookmanager/controller/Create_Book.do" method="post">
+		도서 번호 : ${booknum} <input type="hidden" name="Bnum_info"
+			value="${booknum}"><br> 제 목 : <input type="text"
+			name="Bname_info"><br> <br>
+		<!-- 여기에 저자 선택 창 떠야한다.(authornum, birthyear, authorname) -->
+		저 자 : <input type="text" name="Bauth_info"> <input
+			type="button" name="check" value="check" onclick=checkbtn()><br>
+		<br> 출 판 사 : <input type="text" name="Bpub_info"><br>
+		<br> 상세 설명 : <input type="text" name="Binf_info"><br>
+		<br> <input type="submit" value="도서 추가">
 	</form>
-	<form action = "/bookManager/controller/Back.do" method = "post">
-		<input type = "button" name = "btn_Back" value = "back">
+	<form action="/bookmanager/controller/CreateAuthor.do" method="post">
+		<input type="hidden" name="booknum" value="${booknum}"> <input
+			type="hidden" name="btn_createA" value="first"> <input
+			type="submit" value="작가 추가">
 	</form>
+	<br>
+	<br>
+	<form action="/bookmanager/controller/Back.do" method="post">
+		<input type="submit" name="btn_Back" value="back">
+	</form> --%>
 </body>
 </html>

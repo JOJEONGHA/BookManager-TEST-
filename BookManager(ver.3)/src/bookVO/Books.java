@@ -1,12 +1,12 @@
 package bookVO;
 
 public class Books {
-    private Integer booknum;
+    private String booknum;
     private String title;
     private String publisher;
     private String summary;
 
-    public Integer getBooknum() {
+    public String getBooknum() {
         return booknum;
     }
 
@@ -34,7 +34,7 @@ public class Books {
         this.title = title;
     }
 
-    public void setBooknum(Integer booknum) {
+    public void setBooknum(String booknum) {
         this.booknum = booknum;
     }
 }

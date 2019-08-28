@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Date1",
+            "request": "launch",
+            "mainClass": "test.Date1",
+            "projectName": "bookmanager"
+        }
+    ]
+    ,"compilerOptions": {
+        "target": "es6"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+    
+}

@@ -1,20 +1,20 @@
 package bookVO;
 
 public class JoinTable{
-    private Integer booknum;
+    private String booknum;
     private String title;
     private String publisher;
     private String summary;
-    private Integer authornum;
+    private String authornum;
     private String authorname;
-    private Integer birthyear;
+    private String birthyear;
     
     public JoinTable() {}
     
-	public Integer getBirthyear() {
+	public String getBirthyear() {
 		return birthyear;
 	}
-	public void setBirthyear(Integer birthyear) {
+	public void setBirthyear(String birthyear) {
 		this.birthyear = birthyear;
 	}
 	public String getAuthorname() {
@@ -23,10 +23,10 @@ public class JoinTable{
 	public void setAuthorname(String authorname) {
 		this.authorname = authorname;
 	}
-	public Integer getAuthornum() {
+	public String getAuthornum() {
 		return authornum;
 	}
-	public void setAuthornum(Integer authornum) {
+	public void setAuthornum(String authornum) {
 		this.authornum = authornum;
 	}
 	public String getSummary() {
@@ -47,10 +47,10 @@ public class JoinTable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getBooknum() {
+	public String getBooknum() {
 		return booknum;
 	}
-	public void setBooknum(Integer booknum) {
+	public void setBooknum(String booknum) {
 		this.booknum = booknum;
 	}
 }

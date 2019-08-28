@@ -7,13 +7,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Book information</title>
+	<meta charset="UTF-8">
+	<title>Book information</title>
 </head>
 <body>
 	<h1>[도서]${bookInfo.title}</h1>
-	<form action = "/bookManager/controller/Update.do" method = "post">
-		도서 번호 : ${bookInfo.booknum}<br><br><!-- 임의 숫자 생성 js 필요 -->
+	<form action = "/bookmanager/controller/Update.do" method = "post">
+		<%-- 도서 번호 : ${bookInfo.booknum}<br><br><!-- 임의 숫자 생성 js 필요 --> --%>
 		저       자 : <input type = "text" name = "Bauth_info" value = "${bookInfo.authorname}"><br><br>
 		출  판  사 : <input type = "text" name = "Bpub_info" value = "${bookInfo.publisher}"><br><br>
 		상세 설명 : <input type = "text" name = "Binf_info" value = "${bookInfo.summary}"><br><br>

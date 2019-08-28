@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bookDAO.BooksDAO;
+import bookVO.Authors;
 import bookVO.JoinTable;
 
 @WebServlet("/controller/*")
@@ -37,11 +38,27 @@ public class MainController extends HttpServlet {
 			String visit = request.getParameter("btn_create");
 			// First visit and Direct visit(URL)
 			if(visit.equals("first_visit") || visit.equals(null)) {
+				String booknum = dao.firstCreate();
+				request.setAttribute("booknum", booknum);
 				nextPage = "/create_C.jsp";
 			}else {
+				String booknum = request.getParameter("Bnum_info");
+				String title = request.getParameter("Bname_info");
+				String author = request.getParameter("Bauth_info");
+				String publisher = request.getParameter("Bpub_info");
+				String summary = request.getParameter("Binf_info");
+				JoinTable temp = new JoinTable();
+				temp.setBooknum(booknum);
+				temp.setTitle(title);
+				temp.setAuthorname(author);
+				temp.setPublisher(publisher);
+				temp.setSummary(summary);
+				//temp.setAuthornum(authornum);
+				//temp.setBirthyear(birthyear);
+				
+				dao.createBooks(temp);
 				nextPage = "/main_LS.jsp";
 			}
-			
 		}
 		//(main - Load all book list)
 		else if (action.equals("/List.do")) {
@@ -53,8 +70,7 @@ public class MainController extends HttpServlet {
 		else if(action.equals("/update.do")){
 			// View Button Click Action
 			if(request.getParameter("btnInfo").equals("view")) {
-				String temp_snum = request.getParameter("bookinfo");
-				int temp_num = Integer.parseInt(temp_snum);
+				String temp_num = request.getParameter("bookinfo");
 				JoinTable temp = dao.bookInfo(temp_num);
 				request.setAttribute("bookInfo", temp);
 				nextPage = "/info_UD.jsp";
@@ -67,6 +83,22 @@ public class MainController extends HttpServlet {
 		//(all page - back to main(list))
 		else if(action.equals("/Back.do") || action == ""){
 			nextPage = "/main_LS.jsp";
+		}
+		//(createA_C - Add author)
+		else if(action.equals("/CreateAuthor.do")){
+			String visit = request.getParameter("btn_createA");
+			String booknum = request.getParameter("booknum");
+			request.setAttribute("booknum", booknum);
+			if(visit.equals("first")) {
+				nextPage = "/enroll_C.jsp";
+			}else {
+				String name = request.getParameter("name_author");
+				String birthyear = request.getParameter("birth_author");
+				Authors temp = new Authors(name,birthyear);
+				boolean exi = dao.checkAuthor(temp);		// Add author or Exist Yes,No
+				request.setAttribute("exist", exi);
+				nextPage = "/create_C.jsp";
+			}
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
 		dispatcher.forward(request, response);

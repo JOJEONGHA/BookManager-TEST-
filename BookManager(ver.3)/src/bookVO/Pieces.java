@@ -1,22 +1,22 @@
 package bookVO;
 
 public class Pieces {
-    private Integer authornum;
-    private Integer booknum;
+    private String authornum;
+    private String booknum;
 
-    public Integer getBooknum() {
+    public String getBooknum() {
         return booknum;
     }
 
-    public void setBooknum(Integer booknum) {
+    public void setBooknum(String booknum) {
         this.booknum = booknum;
     }
 
-    public Integer getAuthornum() {
+    public String getAuthornum() {
         return authornum;
     }
 
-    public void setAuthornum(Integer authornum) {
+    public void setAuthornum(String authornum) {
         this.authornum = authornum;
     }
 }

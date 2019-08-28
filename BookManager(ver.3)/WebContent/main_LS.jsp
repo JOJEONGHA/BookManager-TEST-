@@ -11,16 +11,43 @@
 <head>
 <meta charset="UTF-8">
 <title>main_LS</title>
+<script type="text/javascript">
+	/* window.onload = function() {
+		var doList_ = document.doList;
+		doList_.submit();
+	} */
+	/* var one = false;
+	window.onload = function(){
+		// list Up
+		 var doList_ = document.doList;
+		if(one == false){
+			doList_.submit();
+			one = true;
+		} 
+	
+		var search = document.getElementById("search");
+		search.onkeypress = function(){
+			if(search.value == ""){
+				var autocomplete = document.getElementById("autocomplete");
+				autocomplete.style.display = "none";
+			}
+		}
+		search.onkeyup = function(){
+			alert("key up");
+		}
+	} */
+</script> 
 </head>
 <body>
-	<form action="/bookmanager/controller/List.do" method="post">
+	<form action="/bookmanager/controller/List.do" method="post" name = "doList">
 		<select name='sType'>
 			<option value="Binfo">도서 설명</option>
 			<option value="Bpub">출 판 사</option>
 			<option value="Bnum">도서번호</option>
 			<option value="Bauth">저 자</option>
 			<option value="Bname" selected="selected">책 제목</option>
-		</select> <input type="text" name="bName"> <input type="submit"
+		</select> <input type="text" id="search">
+		<input type="submit"
 			value="search">
 	</form>
 	<table align="center" border="1">
@@ -40,8 +67,8 @@
 				<td>
 					<form action="/bookmanager/controller/update.do">
 						<input type= "hidden" value="${books.booknum}"  name="bookinfo">
-						<input type="hidden" value="view" name="btnInfo">
-						<input type="submit" value="View!">
+						<input type= "hidden" value="view" name="btnInfo">
+						<input type= "submit" value="View!">
 					</form>
 				</td>
 			</tr>

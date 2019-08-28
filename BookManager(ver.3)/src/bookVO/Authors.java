@@ -1,19 +1,24 @@
 package bookVO;
 
 public class Authors {
-	private Integer authornum;
+	private String authornum;
     private String authorname;
-    private Integer birthyear;
-
-    public Integer getAuthornum() {
+    private String birthyear;
+    
+    public Authors(String authorname, String birthyear) {
+    	this.authorname = authorname;
+    	this.birthyear = birthyear;
+    }
+    
+    public String getAuthornum() {
         return authornum;
     }
 
-    public Integer getBirthyear() {
+    public String getBirthyear() {
         return birthyear;
     }
 
-    public void setBirthyear(Integer birthyear) {
+    public void setBirthyear(String birthyear) {
         this.birthyear = birthyear;
     }
 
@@ -25,7 +30,7 @@ public class Authors {
         this.authorname = authorname;
     }
 
-    public void setAuthornum(Integer authornum) {
+    public void setAuthornum(String authornum) {
         this.authornum = authornum;
     }
 }

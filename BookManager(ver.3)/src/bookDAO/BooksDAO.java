@@ -4,13 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import bookVO.Authors;
 import bookVO.Books;
 import bookVO.JoinTable;
 
@@ -28,14 +31,16 @@ public class BooksDAO {
 			e.printStackTrace();
 		}
     }
-    public JoinTable bookInfo(int num) {
+	
+	// (info_UD - 선택한 책 정보)
+    public JoinTable bookInfo(String num) {
     	JoinTable info = new JoinTable();
     	
     	List<JoinTable> list = new ArrayList<JoinTable>();
     	list = listBooks();
     	// 글쓴이 수정하는 거는 복수개가 들어가므로 신경써야한다.
     	for(JoinTable i : list) {
-    		if(i.getBooknum() == num) {
+    		if(i.getBooknum().equals(num)) {
     			info = i;
     			break;
     		}
@@ -43,6 +48,7 @@ public class BooksDAO {
     	return info;
     }
 	
+    // (Main - 책 리스트)
     public List<JoinTable> listBooks(){
         List<JoinTable> list = new ArrayList<JoinTable>();
         try {
@@ -55,13 +61,13 @@ public class BooksDAO {
             pstmt = con.prepareStatement(query);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-				Integer booknum = rs.getInt("booknum");
+				String booknum = rs.getString("booknum");
                 String title = rs.getString("title");
                 String authorname = rs.getString("authorname");
                 String publisher = rs.getString("publisher");
                 String summary = rs.getString("summary");
-                Integer authornum = rs.getInt("authornum");
-                Integer birthyear = rs.getInt("birthyear");
+                String authornum = rs.getString("authornum");
+                String birthyear = rs.getString("birthyear");
                 JoinTable jt = new JoinTable();
                 
                 // Same authors catch
@@ -69,7 +75,7 @@ public class BooksDAO {
                     boolean switch_ = rs.next();
                     
                     if(switch_ == true) {
-                    	Integer temp = rs.getInt("booknum");
+                    	String temp = rs.getString("booknum");
                     	if(booknum == temp)
                             authorname += ", " + rs.getString("authorname");
                         else{
@@ -101,5 +107,67 @@ public class BooksDAO {
             e.printStackTrace();
 		}
         return list;
+    }
+    
+    // (create_C - 책 추가 시 일련번호 생성)
+    public String firstCreate() {
+    	Date today = new Date();
+        SimpleDateFormat date = new SimpleDateFormat("yyMMddhhmmss");
+		String now = date.format(today);
+		// book code is start 01-
+        String booknum = "01-" + now;
+        
+        return booknum;
+    }
+    
+    // (enroll_C - 같은 이름,생일 가진 작가 유무 판단 후 없으면 db에 추가)
+    public boolean checkAuthor(Authors a) {
+    	String temp_name = a.getAuthorname();
+    	String temp_birth = a.getBirthyear();
+    	String query = "SELECT * FROM authors WHERE authorname= '" 
+    					+ temp_name + "' and birthyear= '" 
+    					+ temp_birth + "'";
+    	
+    	try {
+    		con = dataFactory.getConnection();
+			pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next() == true) 
+				return false;
+			
+			// Authors Code Setting
+			// Authors code is start 00-
+			Date today = new Date();
+			SimpleDateFormat date = new SimpleDateFormat("yyMMddhhmmss");
+			String now = date.format(today);
+			String authornum = "00-"+now;
+
+			// Add Author into DB
+			query = "INSERT INTO authors ";
+			query += " (authornum,authorname,birthyear)";
+			query += " values(?,?,?)";
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, authornum);
+			pstmt.setString(2, temp_name);
+			pstmt.setString(3, temp_birth);
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+    	return true;
+    }
+    
+    public void createBooks(JoinTable jt) {
+   	    try {
+			con = dataFactory.getConnection();
+			String query = "";
+			pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+                
     }
 }
