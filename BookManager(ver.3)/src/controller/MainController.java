@@ -89,7 +89,24 @@ public class MainController extends HttpServlet {
 		}
 		//(main - Load all book list)
 		else if (action.equals("/List.do")) {
-			List<JoinTable> booksList = dao.listBooks();
+			List<JoinTable> booksList = dao.listBooks();	
+			String value = request.getParameter("sType");
+			String search = request.getParameter("search");
+			
+			if(search != null) {
+				if(value.equals("Bpub")) {		// 출판사,1
+					booksList = dao.bookSearch(search, 1);
+				}else if(value.equals("Bnum")) {// 도서번호,2
+					booksList = dao.bookSearch(search, 2);
+				}else if(value.equals("Bauth")) {// 저자,3
+					booksList = dao.bookSearch(search, 3);
+				}else if(value.equals("Bname")) {// 책 제목,4
+					booksList = dao.bookSearch(search, 4);
+				}else if(value.equals("Binfo")) {// 도서 설명,0
+					booksList = dao.bookSearch(search, 0);
+				}
+			}
+			
 			request.setAttribute("booksList", booksList);
 			nextPage = "/main_LS.jsp";
 		}
@@ -105,7 +122,7 @@ public class MainController extends HttpServlet {
 				dao.deleteBooks(temp);
 				nextPage = "/main_LS.jsp";
 			}else if(request.getParameter("btnInfo").equals("update")){
-
+				// TODO: 도서 업데이트
 			}
 		}
 		//(enroll - Author enroll)

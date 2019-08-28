@@ -33,20 +33,52 @@ public class BooksDAO {
 		}
 	}
 
-	// (info_UD - 선택한 책 정보)
+	// (info_UD - 책 번호 검색)
 	public JoinTable bookInfo(String num) {
 		JoinTable info = new JoinTable();
 
 		List<JoinTable> list = new ArrayList<JoinTable>();
 		list = listBooks();
-		// 글쓴이 수정하는 거는 복수개가 들어가므로 신경써야한다.
+		
 		for (JoinTable i : list) {
 			String temp = i.getBooknum();
-			String temp_ = num;
-			System.out.println(temp.equals(temp_));
 			if (temp.equals(num)) {
-				info = i; // TROBLE : 안들어가니꺼 Null인 거지
+				info = i; 
 				break;
+			}
+		}
+		return info;
+	}
+
+	// (info_UD - 선택한 정보 검색(return List))
+	public List<JoinTable> bookSearch(String num, int value) {
+		List<JoinTable> info = new ArrayList<JoinTable>();
+
+		List<JoinTable> list = new ArrayList<JoinTable>();
+		list = listBooks();
+		
+		String temp = new String();
+		for (JoinTable i : list) {
+			switch(value) {
+			case 0:	// 도서설명
+				temp = i.getSummary();
+				break;
+			case 1:	// 출판사
+				temp = i.getPublisher();
+				break;
+			case 2:	// 도서번호
+				temp = i.getBooknum();
+				break;
+			case 3:	// 저자
+				temp = i.getAuthorname();
+				break;
+			case 4:	// 책 제목
+				temp = i.getTitle();
+				break;
+			}
+			
+			if (temp.contains(num)) {
+				info.add(i); 
 			}
 		}
 		return info;

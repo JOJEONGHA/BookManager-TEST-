@@ -4,9 +4,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-<<script type="text/javascript">
-	var bookinfo = document.getPar
-</script>
+
 <!DOCTYPE html>
 <html>
 <head>
