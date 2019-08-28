@@ -6,7 +6,14 @@ public class Books {
     private String publisher;
     private String summary;
 
-    public String getBooknum() {
+    public Books(String booknum, String title, String publisher, String summary) {  
+        this.booknum = booknum;
+        this.title = title;
+        this.publisher = publisher;
+        this.summary = summary;
+	}
+
+	public String getBooknum() {
         return booknum;
     }
 

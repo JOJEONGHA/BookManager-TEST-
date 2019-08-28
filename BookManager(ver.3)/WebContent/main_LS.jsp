@@ -15,7 +15,9 @@
 	/* window.onload = function() {
 		var doList_ = document.doList;
 		doList_.submit();
-	} */
+		
+	}  */
+	
 	/* var one = false;
 	window.onload = function(){
 		// list Up
@@ -34,8 +36,8 @@
 		}
 		search.onkeyup = function(){
 			alert("key up");
-		}
-	} */
+		} */
+	//} 
 </script> 
 </head>
 <body>
@@ -73,7 +75,6 @@
 				</td>
 			</tr>
 		</c:forEach>
-
 	</table>
 	<form action = "/bookmanager/controller/Create_Book.do" method = "post">
 		<input type = "hidden" name = "btn_create" value = "first_visit">

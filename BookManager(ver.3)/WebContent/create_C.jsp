@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"
-	import = "bookDAO.*"%>
+	pageEncoding="UTF-8" isELIgnored="false" import="bookDAO.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -28,14 +27,14 @@
 		var oCell = oRow.insertCell();
 
 		//삽입될 Form Tag
-		var frmTag = "<input type=text name=authorbox style=width:150px; height:20px;> ";
-		frmTag += "<input type=button id = 'checkBtn'  value='check' onClick='checkbtn()' style='cursor:hand'>";
+		var frmTag = "<input type=text name=Bauth_info style=width:150px; height:20px;> ";
+		frmTag += "<input type=button id='checkBtn' onclick='checkbtn()' value='+'>";
 		oCell.innerHTML = frmTag;
 	}
 </script>
 </head>
 <body>
-<form action="/bookmanager/controller/Create_Book.do" method="post">
+	<%-- <form action="/bookmanager/controller/Create_Book.do" method="post">
 	<table>
 		<tr>
 			<td>도서번호 : ${booknum} <input type="hidden" name="booknum"
@@ -69,17 +68,24 @@
 			<td><input type="button" name="btn_Back" value="back"></td>
 		</tr>
 	</table>
-</form>
+</form> --%>
 
-	<%-- <form action="/bookmanager/controller/Create_Book.do" method="post">
+	<form action="/bookmanager/controller/Create_Book.do" method="post">
 		도서 번호 : ${booknum} <input type="hidden" name="Bnum_info"
 			value="${booknum}"><br> 제 목 : <input type="text"
 			name="Bname_info"><br> <br>
-		<!-- 여기에 저자 선택 창 떠야한다.(authornum, birthyear, authorname) -->
-		저 자 : <input type="text" name="Bauth_info"> <input
-			type="button" name="check" value="check" onclick=checkbtn()><br>
+		<table id="author">
+			<tr>
+				<td>저 자 :<input type="text" name="Bauth_info"
+					style="width: 150px; height: 20px;"></td>
+				<td><input type="button" id="checkBtn" onclick="checkbtn()"
+					value="+"></td>
+			</tr>
+		</table>
+
 		<br> 출 판 사 : <input type="text" name="Bpub_info"><br>
 		<br> 상세 설명 : <input type="text" name="Binf_info"><br>
+		<input type = "hidden" name = "btn_create" value = "second_visit">
 		<br> <input type="submit" value="도서 추가">
 	</form>
 	<form action="/bookmanager/controller/CreateAuthor.do" method="post">
@@ -91,6 +97,6 @@
 	<br>
 	<form action="/bookmanager/controller/Back.do" method="post">
 		<input type="submit" name="btn_Back" value="back">
-	</form> --%>
+	</form>
 </body>
 </html>

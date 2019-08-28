@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import bookVO.Authors;
 import bookVO.Books;
 import bookVO.JoinTable;
+import bookVO.Pieces;
 
 public class BooksDAO {
     private Connection con;
@@ -40,8 +41,11 @@ public class BooksDAO {
     	list = listBooks();
     	// 글쓴이 수정하는 거는 복수개가 들어가므로 신경써야한다.
     	for(JoinTable i : list) {
-    		if(i.getBooknum().equals(num)) {
-    			info = i;
+    		String temp = i.getBooknum();
+    		String temp_ = num;
+    		System.out.println(temp.equals(temp_));
+    		if(temp.equals(num)) {
+    			info = i;	// TROBLE : 안들어가니꺼 Null인 거지
     			break;
     		}
     	}
@@ -76,15 +80,14 @@ public class BooksDAO {
                     
                     if(switch_ == true) {
                     	String temp = rs.getString("booknum");
-                    	if(booknum == temp)
+                    	if(booknum.equals(temp))
                             authorname += ", " + rs.getString("authorname");
                         else{
                             rs.previous();
                             System.out.println("test");
                             break;
                         }
-                    }else {
-                    	
+                    }else {       	
                     	System.out.println("test");
                     	break;
                     }
@@ -119,7 +122,27 @@ public class BooksDAO {
         
         return booknum;
     }
-    
+	
+	// (Create_C - 해당 정보의 작가 번호 return)
+	public String whatAuthor(String name, String birth){
+		String num = new String();
+		try {
+			con = dataFactory.getConnection();
+			String query = "SELECT * FROM authors" 
+							+ " WHERE authorname = '" + name
+							+ "' and birthyear = '" + birth + "'";
+			pstmt = con.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next() == false)
+				return null;
+			num = rs.getString("authornum");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return num;
+	}
+
     // (enroll_C - 같은 이름,생일 가진 작가 유무 판단 후 없으면 db에 추가)
     public boolean checkAuthor(Authors a) {
     	String temp_name = a.getAuthorname();
@@ -158,13 +181,64 @@ public class BooksDAO {
         
     	return true;
     }
-    
-    public void createBooks(JoinTable jt) {
+	
+	// 도서 삭제
+	public void deleteBooks(JoinTable j){
+		try {
+			con = dataFactory.getConnection();
+			// TODO: JoinTable 에서 Booknum, authornum 도출
+			String booknum = j.getBooknum();
+			String authornum = j.getAuthornum();
+			// TODO: authornum 분리 작업 필요
+			// TODO: Delete 수행
+			// piece delete
+			System.out.println(booknum);
+			String query = "DELETE FROM pieces WHERE booknum = '" + booknum + "'AND authornum = '" + authornum + "'";
+			pstmt = con.prepareStatement(query);
+			pstmt.executeUpdate();
+
+			// book delete
+			query = "DELETE FROM books WHERE booknum ='" + booknum + "'";
+			pstmt = con.prepareStatement(query);
+			pstmt.executeUpdate();
+			pstmt.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+    public void createBooks(Books b, List<Pieces> l){
    	    try {
 			con = dataFactory.getConnection();
-			String query = "";
+
+			// TODO : book insert into DB
+			String num = b.getBooknum();
+			String title = b.getTitle();
+			String publisher = b.getPublisher();
+			String summary = b.getSummary();
+			String query = "INSERT INTO books";
+			query += " (booknum,title,publisher,summary)";
+			query += " values(?,?,?,?)";
 			pstmt = con.prepareStatement(query);
-			ResultSet rs = pstmt.executeQuery();
+			pstmt.setString(1, num);
+			pstmt.setString(2, title);
+			pstmt.setString(3, publisher);
+			pstmt.setString(4, summary);
+			pstmt.executeUpdate();
+
+			// TODO : pieces insert into DB
+			for(Pieces p: l){
+				query = "INSERT INTO pieces";
+				query += " (booknum,authornum)";
+				query += " values(?,?)";
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, p.getBooknum());
+				pstmt.setString(2, p.getAuthornum());
+				pstmt.executeUpdate();
+			}
+			pstmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
