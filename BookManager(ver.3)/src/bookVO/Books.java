@@ -11,6 +11,12 @@ public class Books {
         this.title = title;
         this.publisher = publisher;
         this.summary = summary;
+    }
+
+    public Books(String booknum, String publisher, String summary) {  
+        this.booknum = booknum;
+        this.publisher = publisher;
+        this.summary = summary;
 	}
 
 	public String getBooknum() {

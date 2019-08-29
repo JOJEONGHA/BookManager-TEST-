@@ -19,9 +19,8 @@
 <body>
 	<form name = "enroll" action="/bookmanager/controller/CreateAuthor.do" method="post">
 		작가 이름 : <input type="text" name="name_author"><br>
-		<br><br>
-		<br> 출신 년월 : <input type="text" name="birth_author">
-		<font color="#FF0000">*</font> ex) 1992년 4월 12일 -> 19920412 <br>
+		<br> 출신 년월 : <input type="text" name="birth_author"><br>
+		<font color="#FF0000">*</font> ex) 1992년 4월 12일 -> 19920412 <br><br>
 		<input type= "hidden" name = "exiOK" value = ${exi}>
 		<input type="hidden" name="btn_createA" value="second"> 
 		<input type="submit" value="추가">

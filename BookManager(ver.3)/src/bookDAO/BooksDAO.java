@@ -90,7 +90,7 @@ public class BooksDAO {
 		try {
 			con = dataFactory.getConnection();
 			String query = "SELECT * " + "FROM books b " + "INNER JOIN pieces p ON b.booknum = p.booknum "
-					+ "inner join authors a on p.authornum = a.authornum " + "order by b.title desc";
+					+ "inner join authors a on p.authornum = a.authornum " + "order by b.title asc";
 			pstmt = con.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -114,16 +114,13 @@ public class BooksDAO {
 							authornum += ", " + rs.getString("authornum");
 						} else {
 							rs.previous();
-							System.out.println("test");
 							break;
 						}
 					} else {
-						System.out.println("test");
 						break;
 					}
 
 				}
-				System.out.println("test");
 				jt.setBooknum(booknum);
 				jt.setTitle(title);
 				jt.setAuthorname(authorname);
@@ -210,6 +207,27 @@ public class BooksDAO {
 		return true;
 	}
 
+	// 도서정보 수정
+	public void UpdateBooks(Books b){
+		// Books(num,pub,sum) DB에 업데이트
+		// 해당 책(num)을 찾아서, 변경(pub,sum)
+		try {
+			con = dataFactory.getConnection();
+			String pub = b.getPublisher();
+			String sum = b.getSummary();
+			String num = b.getBooknum();
+			num = num.trim();
+			String query = "UPDATE books SET publisher = '"
+							+ pub +"' , summary = '"
+							+ sum +"' WHERE booknum = '"+ num +"'";
+			pstmt = con.prepareStatement(query);	
+			pstmt.executeUpdate();
+			pstmt.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	// 도서 삭제
 	public void deleteBooks(JoinTable j) {
 		try {
@@ -242,7 +260,7 @@ public class BooksDAO {
 		try {
 			con = dataFactory.getConnection();
 
-			// TODO : book insert into DB
+			// book insert into DB
 			String num = b.getBooknum();
 			String title = b.getTitle();
 			String publisher = b.getPublisher();
@@ -257,7 +275,7 @@ public class BooksDAO {
 			pstmt.setString(4, summary);
 			pstmt.executeUpdate();
 
-			// TODO : pieces insert into DB
+			// pieces insert into DB
 			for (Pieces p : l) {
 				query = "INSERT INTO pieces";
 				query += " (booknum,authornum)";
